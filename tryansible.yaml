@@ -1,12 +1,14 @@
 ---
-- name: apt update
+- name: installing and configuring wildfly
   become: yes
   hosts: all
   tasks:
-    - name: installing jdk-11 
+    - name: installing jdk-11 curl and wget
       ansible.builtin.apt:
-        name: install openjdk-11-jdk
-
+        name:
+          - openjdk-11-jdk
+          - curl
+          - wget
         update_cache: yes
         state: present
     - name: un-tar in wildfly
