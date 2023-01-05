@@ -3,12 +3,10 @@
   become: yes
   hosts: all
   tasks:
-    - name: installing jdk-11 curl and wget
+    - name: installing jdk-11 
       ansible.builtin.apt:
-        name:
-          - openjdk-11-jdk
-          - curl
-          - wget
+        name: install openjdk-11-jdk
+
         update_cache: yes
         state: present
     - name: un-tar in wildfly
