@@ -1,0 +1,35 @@
+---
+- name: apt update
+  become: yes
+  hosts: all
+  tasks: 
+    - name: install openjdk-11-jdk
+      ansible.builtin.apt:
+        name:  openjdk-11-jdk
+        state: present 
+    - name:  Add the group wildfly
+      ansible.builtin.group:
+        name: wildfly
+        state: present 
+    - name: Add the user wildfly
+      ansible.builtin.user:
+        name: wildfly
+        groups: wildfly
+        home: /opt/wildfly
+        shell: /sbin/nologin wildfly
+        append: yes
+    - name: Download file wildfly
+      ansible.builtin.get_url:
+        url: https://download.jboss.org/wildfly/22.0.1.Final/wildfly-22.0.1.Final.tar.gz
+        dest: /tmp
+        force_basic_auth: yes
+    - name: Create a directory  wildfly in /opt/
+      ansible.builtin.file:
+        path: /opt/wildfly
+        state: directory
+        mode: '0755'
+    - name: copy files to /opt/wildfly
+      ansible.builtin.copy:
+        src: /tmp/wildfly/22.0.1.Final
+        dest: /opt/wildfly
+        remote_src: yes
