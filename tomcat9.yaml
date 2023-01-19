@@ -1,7 +1,7 @@
 ---
 - name: install tomcat 9
   become: yes
-  hosts: appserver
+  hosts: webserver
   tasks:
     - name: update ubuntu packages and install java 11
       ansible.builtin.apt:
